@@ -60,15 +60,16 @@ class eyeBall {
  }
  
  void display(PVector gd) {
+   float randomFactor = r*0.01;
    noStroke();
    fill (255,245,245);
    ellipse (wc.x, wc.y, r*2, r*2);
    
    PVector d;
    if (gd.dist(wc) < (r/2)) {
-     d = new PVector (gd.x, gd.y);
+     d = new PVector (gd.x + random(-1*randomFactor, randomFactor), gd.y + random(-1*randomFactor, randomFactor));
    } else {
-     d = new PVector ((r/2)*( (gd.x - wc.x)/gd.dist(wc)) + wc.x, (r/2)*((gd.y - wc.y)/gd.dist(wc)) + wc.y );
+     d = new PVector ((r/2)*( (gd.x - wc.x)/gd.dist(wc)) + wc.x  + random(-1*randomFactor, randomFactor), (r/2)*((gd.y - wc.y)/gd.dist(wc)) + wc.y  + random(-1*randomFactor, randomFactor) );
    }
 
    
