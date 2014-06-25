@@ -1,13 +1,34 @@
-  int maxEyes = 150;
+import gab.opencv.*;
+import processing.video.*;
+import java.awt.*;
+
+int maxEyes = 150;
 float miner = 60;
 float maxer = 80;
 float mFactor = 0.85;
 ArrayList theEyes;
 int maxTries= 10000;
+PVector myPos;
+PVector relaxPos;
+
+int vidW = 320;
+int vidH = 240;
+
+
+Capture video;
+OpenCV opencv;
 
 
 
 void setup () {
+  myPos = new PVector (displayWidth/2, displayHeight/2);
+  relaxPos = new PVector (displayWidth/2, displayHeight/2);
+  video = new Capture(this, vidW, vidH);
+  opencv = new OpenCV(this, vidW, vidH);
+  opencv.loadCascade(OpenCV.CASCADE_FRONTALFACE); 
+ 
+  video.start(); 
+  
   size (displayWidth, displayHeight, P2D);
   theEyes = new ArrayList();
   int safetyNet = 0;
@@ -40,10 +61,35 @@ void setup () {
 
 void draw () {
  background (255,210, 200);
+ 
+ // detect faces
+ opencv.loadImage(video);
+ Rectangle[] faces = opencv.detect();
+ println(faces.length);
+ 
+ // average position of the faces, or just relax back to center
+ if (faces.length > 0) {
+   myPos.set(0,0);
+   for (int i=0; i< faces.length; i++) {
+     PVector r =  new PVector(faces[i].x + (faces[i].width/2), faces[i].y + (faces[i].height/2));
+     myPos.add(r);
+   }
+   myPos.div(faces.length);
+   myPos.set(myPos.x*(displayWidth/vidW), myPos.y*(displayHeight/vidH));
+ } else { 
+   PVector theDiff = PVector.sub(myPos, relaxPos);
+   //theDiff = relaxPos; 
+   theDiff = PVector.mult(theDiff, -0.1);
+   myPos = PVector.add (myPos, theDiff);
+ }
+ 
  for (int i=0; i <theEyes.size(); i++) {
       eyeBall eye = (eyeBall) theEyes.get(i);
-      eye.display(new PVector (mouseX, mouseY));
+      eye.display(myPos);
  }
+ // scale(2);
+ image(video, 0, 0 );
+
 }
 
 class eyeBall {
