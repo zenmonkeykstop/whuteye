@@ -82,7 +82,7 @@ void draw () {
      myPos.add(r);
    }
    myPos.div(faces.length);
-   myPos.set(myPos.x*(displayWidth/vidW), myPos.y*(displayHeight/vidH));
+   myPos.set(abs(myPos.x*(displayWidth/vidW) - displayWidth), myPos.y*(displayHeight/vidH));
  } else { 
    PVector theDiff = PVector.sub(myPos, relaxPos);
    //theDiff = relaxPos; 
