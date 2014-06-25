@@ -2,6 +2,8 @@ import gab.opencv.*;
 import processing.video.*;
 import java.awt.*;
 
+boolean displayVideo = false;
+
 int maxEyes = 150;
 float miner = 60;
 float maxer = 80;
@@ -18,6 +20,11 @@ int vidH = 240;
 Capture video;
 OpenCV opencv;
 
+// Events
+void keyPressed()
+{
+  if (key == 'v') displayVideo = !displayVideo;
+}
 
 
 void setup () {
@@ -88,7 +95,17 @@ void draw () {
       eye.display(myPos);
  }
  // scale(2);
- image(video, 0, 0 );
+ if (displayVideo){
+   image(video, 0, 0 );
+   noFill();
+    stroke(0, 255, 0);
+    strokeWeight(1);
+    println(faces.length);
+
+    for (int i = 0; i < faces.length; i++) {
+      rect(faces[i].x, faces[i].y, faces[i].width, faces[i].height);
+    }
+   }
 
 }
 
