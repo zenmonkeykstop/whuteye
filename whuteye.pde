@@ -93,8 +93,7 @@ void draw () {
 }
 
 class eyeBall {
- 
- color ic;
+  color ic;
  float r;
  // iris radius is 50% of whites, pupil is 20%
  PVector wc;
@@ -106,7 +105,7 @@ class eyeBall {
  }
  
  void display(PVector gd) {
-   float randomFactor = r*0.01;
+   float randomFactor = r*0.005;
    noStroke();
    fill (255,245,245);
    ellipse (wc.x, wc.y, r*2, r*2);
