@@ -1,6 +1,6 @@
-  int maxEyes = 150;
-float miner = 60;
-float maxer = 80;
+  int maxEyes = 500;
+float miner = 10;
+float maxer = 60;
 float mFactor = 0.85;
 ArrayList theEyes;
 int maxTries= 10000;
